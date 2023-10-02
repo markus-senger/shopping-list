@@ -72,7 +72,7 @@ public class DatabaseManager : MonoBehaviour
                 items.Add(item);
             }
 
-            items = items.OrderByDescending(item => item.dateTime).ToList();
+            items = items.OrderByDescending(item => DateTime.Parse(item.dateTime)).ToList();
 
             foreach(var item in items)
             {
