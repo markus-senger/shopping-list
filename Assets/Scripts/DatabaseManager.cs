@@ -15,12 +15,19 @@ public class DatabaseManager : MonoBehaviour
     [SerializeField] private TMP_InputField itemInputField;
     [SerializeField] private GameObject contentPanel;
     [SerializeField] private GameObject itemPrefab;
+    [SerializeField] private GameObject connectionErrorImage;
 
     private DatabaseReference reference;
 
     private void Start()
     {
         reference = FirebaseDatabase.DefaultInstance.RootReference;
+
+        DatabaseReference connectedRef = FirebaseDatabase.DefaultInstance.GetReference(".info/connected");
+        connectedRef.ValueChanged += (object sender, ValueChangedEventArgs a) => {
+            bool isConnected = (bool)a.Snapshot.Value;
+            connectionErrorImage.SetActive(!isConnected);
+        };
 
         GetData();
 
@@ -74,12 +81,13 @@ public class DatabaseManager : MonoBehaviour
 
             items = items.OrderByDescending(item => DateTime.Parse(item.dateTime)).ToList();
 
-            foreach(var item in items)
+            foreach (var item in items)
             {
                 GameObject itemObject = Instantiate(itemPrefab, contentPanel.transform);
                 itemObject.GetComponent<ItemHandler>().SetItemInfos(this, item.guid, item.dateTime, item.name);
             }
         }
+
         gameObject.GetComponent<UIHandler>().SetToggleValue(keep: true);
     }
 
