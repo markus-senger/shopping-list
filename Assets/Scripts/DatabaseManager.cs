@@ -18,15 +18,19 @@ public class DatabaseManager : MonoBehaviour
     [SerializeField] private GameObject connectionErrorImage;
 
     private DatabaseReference reference;
+    private bool getDataRunning;
+    private bool isConnected;
 
     private void Start()
     {
         reference = FirebaseDatabase.DefaultInstance.RootReference;
+        getDataRunning = false;
 
         DatabaseReference connectedRef = FirebaseDatabase.DefaultInstance.GetReference(".info/connected");
         connectedRef.ValueChanged += (object sender, ValueChangedEventArgs a) => {
-            bool isConnected = (bool)a.Snapshot.Value;
+            isConnected = (bool)a.Snapshot.Value;
             connectionErrorImage.SetActive(!isConnected);
+            GetData();
         };
 
         GetData();
@@ -53,19 +57,22 @@ public class DatabaseManager : MonoBehaviour
 
     private void GetData()
     {
-       StartCoroutine(GetItems());
+        if(!getDataRunning && isConnected)
+            StartCoroutine(GetItems());
     }
 
     private IEnumerator GetItems()
     {
-        var itemdata = reference.Child("items").GetValueAsync();
-
-        yield return new WaitUntil(predicate: () => itemdata.IsCompleted);
+        getDataRunning = true;
 
         foreach (Transform child in contentPanel.transform)
         {
             GameObject.Destroy(child.gameObject);
         }
+
+        var itemdata = reference.Child("items").GetValueAsync();
+
+        yield return new WaitUntil(predicate: () => itemdata.IsCompleted);
 
         if (itemdata != null && itemdata.Result != null)
         {
@@ -89,6 +96,7 @@ public class DatabaseManager : MonoBehaviour
         }
 
         gameObject.GetComponent<UIHandler>().SetToggleValue(keep: true);
+        getDataRunning = false;
     }
 
     public async void DeleteItem(string guid)
