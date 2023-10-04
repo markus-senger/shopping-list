@@ -18,6 +18,7 @@ public class DatabaseManager : MonoBehaviour
     [SerializeField] private GameObject connectionErrorImage;
 
     private DatabaseReference reference;
+    private DatabaseReference connectedRef;
     private bool getDataRunning;
     private bool isConnected;
 
@@ -26,11 +27,13 @@ public class DatabaseManager : MonoBehaviour
         reference = FirebaseDatabase.DefaultInstance.RootReference;
         getDataRunning = false;
 
-        DatabaseReference connectedRef = FirebaseDatabase.DefaultInstance.GetReference(".info/connected");
+        connectedRef = FirebaseDatabase.DefaultInstance.GetReference(".info/connected");
         connectedRef.ValueChanged += (object sender, ValueChangedEventArgs a) => {
             isConnected = (bool)a.Snapshot.Value;
+
             connectionErrorImage.SetActive(!isConnected);
-            GetData();
+            if(isConnected)
+                GetData();
         };
 
         GetData();
@@ -57,7 +60,7 @@ public class DatabaseManager : MonoBehaviour
 
     private void GetData()
     {
-        if(!getDataRunning && isConnected)
+        if(!getDataRunning)
             StartCoroutine(GetItems());
     }
 
