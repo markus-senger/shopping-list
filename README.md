@@ -9,7 +9,8 @@ _Please note that this repository __does not include__ sensitive files like goog
 ![image](https://github.com/markus-senger/shopping-list/assets/77236323/d43ff00e-84c5-4abb-9026-a77ef33cdb8d)
 
 ## Flutter-Version
-![image](https://github.com/markus-senger/shopping-list/assets/77236323/8579228a-e78d-4d2d-9432-b8345fbbab59)
+![image](https://github.com/markus-senger/shopping-list/assets/77236323/b57a9a3d-a9a6-4bc0-9b3c-065c857be541)
+
 
 
 
