@@ -42,21 +42,21 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(40.0), // Set this to your desired height
+        preferredSize: const Size.fromHeight(40.0),
         child: AppBar(
-          title: Row(
+          title: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Einkaufsliste',
                 style: TextStyle(
-                  fontSize: 14.0, // Change this to your desired size
+                  fontSize: 14.0,
                 ),
               ),
               Text(
                 'v2.0.0 (06.2024)',
                 style: TextStyle(
-                  fontSize: 12.0, // Change this to your desired size
+                  fontSize: 12.0,
                 ),
               ),
             ],

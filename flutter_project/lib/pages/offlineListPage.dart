@@ -39,7 +39,7 @@ class _OfflineListState extends State<OfflineListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Offline"),
+        title: const Text("Offline"),
         backgroundColor: Theme.of(context).colorScheme.secondary,
       ),
       body: ListView.builder(
@@ -55,7 +55,7 @@ class _OfflineListState extends State<OfflineListPage> {
               children: [
                 Text(
                   _dateFormat.format(_shoppingList[index].item3),
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                   ),
                 ),

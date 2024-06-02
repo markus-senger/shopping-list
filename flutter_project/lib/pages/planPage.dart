@@ -8,9 +8,8 @@ class PlanPage extends StatefulWidget {
 }
 
 class _PlanState extends State<PlanPage> {
-  // Example variables
-  String _title = 'Plan Page (TODO)';
-  List<String> _plans = ['Plan 1', 'Plan 2', 'Plan 3'];
+  final String _title = 'Plan Page (TODO)';
+  final List<String> _plans = ['Plan 1', 'Plan 2', 'Plan 3'];
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,7 @@ class _PlanState extends State<PlanPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addPlan,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

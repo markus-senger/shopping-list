@@ -64,7 +64,7 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
       direction: DismissDirection.startToEnd,
       background: Container(
         color: Colors.red,
-        child: Icon(Icons.delete, color: Colors.white),
+        child: const Icon(Icons.delete, color: Colors.white),
       ),
       child: Container(
         decoration: BoxDecoration(
@@ -72,12 +72,12 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
           borderRadius: BorderRadius.circular(0.0),
           border: Border.all(color: Colors.black, width: 1.0),
         ),
-        padding: EdgeInsets.only(left: 8.0, right: 8.0, top: 2.0),
+        padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 2.0),
         child: Column(
           children: [
             Text(
               _dateTime,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
             Row(
               children: [
@@ -85,6 +85,9 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
                   child: _isTextFieldVisible
                       ? TextField(
                           controller: _textEditingController,
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.secondary,
+                              fontSize: 18),
                           onSubmitted: (value) {
                             setState(() {
                               _currentItemName = value;
@@ -95,10 +98,11 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
                         )
                       : Text(
                           _currentItemName,
-                          style: TextStyle(color: Colors.white, fontSize: 18),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 18),
                         ),
                 ),
-                SizedBox(width: 8.0),
+                const SizedBox(width: 8.0),
                 IconButton(
                   onPressed: () {
                     setState(() {
@@ -108,7 +112,7 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
                       }
                     });
                   },
-                  icon: Icon(Icons.edit),
+                  icon: const Icon(Icons.edit),
                   color: Theme.of(context).colorScheme.secondary,
                 ),
               ],

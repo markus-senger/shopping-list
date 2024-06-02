@@ -64,6 +64,7 @@ class _ListPageState extends State<ListPage> {
           _shoppingList.add(Tuple3(value['name'], Key(value['guid']),
               _dateFormat.parse(value['dateTime'])));
         });
+        _shoppingList.sort((a, b) => b.item3.compareTo(a.item3));
       } else {
         _shoppingList.clear();
         log('No data available');
