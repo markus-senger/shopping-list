@@ -92,6 +92,7 @@ class _ListPageState extends State<ListPage> {
       });
       _shoppingList
           .add(Tuple3(name, Key(guid), _dateFormat.parse(dateTime).toLocal()));
+      _shoppingList.sort((a, b) => b.item3.compareTo(a.item3));
       _disconnected = false;
       saveList();
       setState(() {});
