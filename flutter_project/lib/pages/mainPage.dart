@@ -35,10 +35,14 @@ class _MainPageState extends State<MainPage> {
   }
 
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
+    login();
+  }
+
+  Future<void> login() async {
     final List<String> credentials =
-        await readCredentialsFromFile('credentials.txt');
+        await readCredentialsFromFile('assets/credentials.txt');
     signInWithEmailAndPassword(credentials[0], credentials[1]);
   }
 
