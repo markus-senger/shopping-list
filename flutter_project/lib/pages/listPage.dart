@@ -53,8 +53,7 @@ class _ListPageState extends State<ListPage> {
 
   Future<void> _fetchShoppingList() async {
     try {
-      var event =
-          (await _database.child('items').once().timeout(Duration(seconds: 2)));
+      var event = (await _database.child('items').once());
       DataSnapshot dataSnapshot = event.snapshot;
       Map<dynamic, dynamic>? items =
           dataSnapshot.value as Map<dynamic, dynamic>?;
@@ -83,8 +82,7 @@ class _ListPageState extends State<ListPage> {
   Future<void> _uploadItem(String name) async {
     try {
       final String guid = const Uuid().v4();
-      log(DateTime.now().toString());
-      final String dateTime = _dateFormat.format(DateTime.now());
+      final String dateTime = _dateFormat.format(DateTime.now().toLocal());
       await _database.child("items").child(guid).set({
         'guid': guid,
         'name': name,
@@ -95,6 +93,7 @@ class _ListPageState extends State<ListPage> {
       _shoppingList.sort((a, b) => b.item3.compareTo(a.item3));
       _disconnected = false;
       saveList();
+      //_fetchShoppingList();
       setState(() {});
     } catch (error) {
       _disconnected = true;
@@ -116,6 +115,7 @@ class _ListPageState extends State<ListPage> {
       await _database.child("items").child(cleanedGuid).remove();
       _disconnected = false;
       saveList();
+      //_fetchShoppingList();
       setState(() {});
     } catch (error) {
       _disconnected = true;
@@ -146,6 +146,7 @@ class _ListPageState extends State<ListPage> {
             Tuple3(newName, guid, _shoppingList[index].item3);
         _disconnected = false;
         saveList();
+        //_fetchShoppingList();
         setState(() {});
       }
     } catch (error) {

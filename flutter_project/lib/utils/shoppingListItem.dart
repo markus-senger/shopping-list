@@ -44,6 +44,8 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
   void didUpdateWidget(covariant ShoppingListItem oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.itemName != _currentItemName) {
+      _currentItemName = widget.itemName;
+      _dateTime = widget.dateTime;
       setState(() {
         _currentItemName = widget.itemName;
       });
