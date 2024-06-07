@@ -5,7 +5,7 @@
 /Firebase
 google-services.json
 google-services.json.meta
-/assets/credentials.txt
+credentials.txt
 
 # Miscellaneous
 *.class
