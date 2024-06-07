@@ -3,9 +3,11 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_project/pages/listPage.dart';
 import 'package:flutter_project/pages/offlineListPage.dart';
 import 'package:flutter_project/pages/planPage.dart';
+import 'package:path_provider/path_provider.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -41,15 +43,16 @@ class _MainPageState extends State<MainPage> {
   }
 
   Future<void> login() async {
+    final Directory directory = await getApplicationDocumentsDirectory();
     final List<String> credentials =
-        await readCredentialsFromFile('assets/credentials.txt');
+        await readCredentialsFromFile("assets/credentials.txt");
     signInWithEmailAndPassword(credentials[0], credentials[1]);
   }
 
   Future<List<String>> readCredentialsFromFile(String filePath) async {
     try {
-      final file = File(filePath);
-      final lines = await file.readAsLines();
+      final string = await rootBundle.loadString(filePath);
+      final lines = string.split(';');
       return lines;
     } catch (e) {
       log('Error reading data: $e');
