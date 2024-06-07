@@ -1,5 +1,7 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/pages/listPage.dart';
 import 'package:flutter_project/pages/offlineListPage.dart';
@@ -12,12 +14,44 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   static const List<Widget> _pages = <Widget>[
     ListPage(),
     OfflineListPage(),
     PlanPage(),
   ];
+
+  Future<void> signInWithEmailAndPassword(String email, String password) async {
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      log('Signed in: ${userCredential.user?.email}');
+    } catch (e) {
+      log('Error: $e');
+    }
+  }
+
+  @override
+  Future<void> initState() async {
+    super.initState();
+    final List<String> credentials =
+        await readCredentialsFromFile('credentials.txt');
+    signInWithEmailAndPassword(credentials[0], credentials[1]);
+  }
+
+  Future<List<String>> readCredentialsFromFile(String filePath) async {
+    try {
+      final file = File(filePath);
+      final lines = await file.readAsLines();
+      return lines;
+    } catch (e) {
+      log('Error reading data: $e');
+      return List.empty();
+    }
+  }
 
   void _onItemTapped(int index) {
     setState(() {
